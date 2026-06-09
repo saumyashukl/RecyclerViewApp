@@ -6,7 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class NameAdapter(private val names: List<String>) :
+class NameAdapter(
+    private val names: List<String>,
+    private val onItemClick: (String) -> Unit
+) :
     RecyclerView.Adapter<NameAdapter.NameViewHolder>() {
 
     class NameViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -20,7 +23,12 @@ class NameAdapter(private val names: List<String>) :
     }
 
     override fun onBindViewHolder(holder: NameViewHolder, position: Int) {
-        holder.nameText.text = names[position]
+        val name = names[position]
+        holder.nameText.text = name
+
+        holder.itemView.setOnClickListener {
+            onItemClick(name)
+        }
     }
 
     override fun getItemCount(): Int {
